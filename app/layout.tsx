@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './corporate-pages.css';
 
 export const metadata: Metadata = {
   title: 'Industrial Intelligence — AI, Data & Automation',
