@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { PageFrame } from '../../../components/site-shell';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import IncidentAnalyzer from './IncidentAnalyzer';
 
@@ -6,10 +7,13 @@ export default async function MaintenanceDemo() {
   const supabase = getSupabaseServer();
   const { data } = supabase ? await supabase.from('demo_maintenance').select('*').order('occurred_at',{ascending:false}) : {data:[]};
   const rows=data??[]; const hydraulic=rows.filter(r=>r.category==='Hydraulics'); const downtime=rows.reduce((s,r)=>s+Number(r.duration_minutes||0),0);
-  return <main className="section section-light" style={{minHeight:'100vh'}}><div className="container"><Link href="/demo" className="eyebrow">← Demo Lab</Link><h1 style={{fontSize:48,margin:'18px 0 8px'}}>MAINTENANCE INTELLIGENCE</h1><p className="muted">Incident narratives → structured events → patterns → action.</p>
-  <div className="grid" style={{marginTop:32}}>{[['INCIDENTS',rows.length],['DOWNTIME',`${downtime} min`],['HYDRAULIC EVENTS',hydraulic.length]].map(([a,b])=><div className="card" key={a}><div className="eyebrow">{a}</div><div style={{fontSize:32,fontWeight:800,marginTop:10}}>{b}</div></div>)}</div>
-  <section className="card dark-card" style={{marginTop:18}}><div className="eyebrow">Pattern detected</div><h2 style={{marginTop:10}}>M-04 · recurring hydraulic failure</h2><p style={{marginTop:10}}>Three hydraulic-related incidents are present in the current synthetic history. The signal is concentrated on the same machine.</p><div className="eyebrow" style={{marginTop:28}}>RECOMMENDATION</div><p>Inspect the hydraulic circuit, seals and recent intervention history before the next production run.</p></section>
-  <IncidentAnalyzer />
-  <section className="card" style={{marginTop:18}}><div className="eyebrow">Incident stream</div>{rows.map(r=><div key={r.id} style={{padding:'17px 0',borderBottom:'1px solid #d7d8d4'}}><div style={{display:'flex',justifyContent:'space-between',gap:12}}><strong>{r.machine_code} · {r.incident_type}</strong><span className={r.severity==='HIGH'||r.severity==='CRITICAL'?'signal':'muted'}>{r.severity}</span></div><p className="muted" style={{marginTop:7}}>{r.description} · {r.duration_minutes} min</p></div>)}</section>
- </div></main>;
+  return <PageFrame><main className="demo-subpage section-light"><div className="container">
+    <div className="demo-subnav"><Link href="/demo">← Demo Lab</Link><span>Maintenance intelligence</span></div>
+    <div className="subpage-heading"><div className="eyebrow">02 / Maintenance</div><h1>Don't just log<br/><span>the failure.</span></h1><p>Structure the incident, expose recurrence and give the maintenance team a defensible next action.</p></div>
+    <div className="grid" style={{marginTop:42}}>{[['INCIDENTS',rows.length,'recorded events'],['DOWNTIME',`${downtime} min`,'recorded loss time'],['HYDRAULIC EVENTS',hydraulic.length,'same-category signals']].map(([a,b,c])=><div className="card" key={a}><div className="eyebrow">{a}</div><strong className="metric-number">{b}</strong><span className="metric-label">{c}</span></div>)}</div>
+    <section className="card dark-card pattern-card"><div className="eyebrow">Pattern detected</div><h2>M-04 · recurring hydraulic failure</h2><p>Three hydraulic-related incidents are present in the current synthetic history. The signal is concentrated on the same machine.</p><div className="pattern-action"><div><span className="eyebrow">RECOMMENDATION</span><strong>Inspect the hydraulic circuit, seals and recent intervention history before the next production run.</strong></div><span className="pattern-badge">REVIEW</span></div></section>
+    <IncidentAnalyzer />
+    <section className="card event-stream"><div className="eyebrow">Incident stream</div>{rows.map(r=><article key={r.id}><div className="event-top"><strong>{r.machine_code} · {r.incident_type}</strong><span className={r.severity==='HIGH'||r.severity==='CRITICAL'?'signal':'muted'}>{r.severity}</span></div><p>{r.description} · {r.duration_minutes} min</p></article>)}</section>
+    <div className="subpage-next"><Link href="/demo/qhse">Next: QHSE intelligence →</Link></div>
+  </div></main></PageFrame>;
 }
