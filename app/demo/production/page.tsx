@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { PageFrame } from '../../../components/site-shell';
 import { getSupabaseServer } from '@/lib/supabase-server';
 
 export default async function ProductionDemo() {
@@ -9,9 +10,11 @@ export default async function ProductionDemo() {
   const target = rows.reduce((s, r) => s + Number(r.target_units || 0), 0);
   const good = rows.reduce((s, r) => s + Number(r.good_units || 0), 0);
   const downtime = rows.reduce((s, r) => s + Number(r.downtime_minutes || 0), 0);
-  return <main className="section section-light" style={{minHeight:'100vh'}}><div className="container">
-    <Link href="/demo" className="eyebrow">← Demo Lab</Link><h1 style={{fontSize:48,margin:'18px 0 8px'}}>PRODUCTION INTELLIGENCE</h1><p className="muted">KPI layer calculated from the synthetic plant dataset.</p>
-    <div className="grid" style={{marginTop:32}}>{[['OUTPUT',produced.toLocaleString()],['TARGET',target.toLocaleString()],['GOOD UNITS',good.toLocaleString()],['DOWNTIME',`${downtime} min`]].map(([a,b])=><div className="card" key={a}><div className="eyebrow">{a}</div><div style={{fontSize:32,fontWeight:800,marginTop:10}}>{b}</div></div>)}</div>
-    <section className="card" style={{marginTop:18}}><div className="eyebrow">Line performance</div><div style={{marginTop:20}}>{rows.map(r=><div key={r.id} style={{display:'grid',gridTemplateColumns:'1.2fr .7fr .7fr .7fr',gap:12,padding:'15px 0',borderBottom:'1px solid #d7d8d4'}}><strong>{r.line_code} · {r.line_name}</strong><span>{r.produced_units} units</span><span>{Math.round((r.produced_units/r.target_units)*100)}% target</span><span>{r.downtime_minutes} min down</span></div>)}</div></section>
-  </div></main>;
+  return <PageFrame><main className="demo-subpage section-light"><div className="container">
+    <div className="demo-subnav"><Link href="/demo">← Demo Lab</Link><span>Production intelligence</span></div>
+    <div className="subpage-heading"><div className="eyebrow">01 / Production</div><h1>What the lines<br/><span>are telling us.</span></h1><p>KPI calculations from the synthetic plant dataset. The same layer can consume structured records from existing operational systems.</p></div>
+    <div className="grid" style={{marginTop:42}}>{[['OUTPUT',produced.toLocaleString(),'units produced'],['TARGET',target.toLocaleString(),'planned units'],['GOOD UNITS',good.toLocaleString(),'accepted units'],['DOWNTIME',`${downtime} min`,'recorded loss time']].map(([a,b,c])=><div className="card" key={a}><div className="eyebrow">{a}</div><strong className="metric-number">{b}</strong><span className="metric-label">{c}</span></div>)}</div>
+    <section className="card data-table-card"><div className="eyebrow">Line performance</div><div className="data-table">{rows.map(r=><div className="data-row" key={r.id}><strong>{r.line_code} · {r.line_name}</strong><span>{r.produced_units} units</span><span>{Math.round((Number(r.produced_units)/Math.max(1,Number(r.target_units)))*100)}% target</span><span>{r.downtime_minutes} min down</span></div>)}</div></section>
+    <div className="subpage-next"><Link href="/demo/maintenance">Next: Maintenance intelligence →</Link></div>
+  </div></main></PageFrame>;
 }
