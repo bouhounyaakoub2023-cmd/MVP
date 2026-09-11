@@ -7,11 +7,18 @@ const solutions = [
   ['02', 'Maintenance Intelligence', 'Structure incident narratives, surface recurring failures and trigger the right follow-up.'],
   ['03', 'Industrial Data', 'Connect fragmented operational information into a reliable layer for analysis and action.'],
 ];
+const lifecycle = [
+  ['01', 'PROBLEM', 'Find the operational friction worth solving.'],
+  ['02', 'DATA', 'Collect the information the workflow already produces.'],
+  ['03', 'INTELLIGENCE', 'Add extraction, analysis and reasoning where it creates leverage.'],
+  ['04', 'AUTOMATION', 'Connect the decision to the next operational step.'],
+  ['05', 'ACTION', 'Put the result back into the workflow, not another dashboard.'],
+];
 
 export default function Home() {
   return <PageFrame>
     <main>
-      <div className="announcement"><span>INDUSTRIAL INTELLIGENCE</span><span>AI + DATA + AUTOMATION FOR OPERATIONS</span><span>01 / 2026</span></div>
+      <div className="announcement"><span>INDUSTRIAL INTELLIGENCE</span><span>AI + DATA + AUTOMATION FOR OPERATIONS</span><span>09 / 2026</span></div>
 
       <section className="hero hero-dark">
         <div className="container hero-grid">
@@ -34,6 +41,19 @@ export default function Home() {
         <div className="container split-intro">
           <div><div className="eyebrow">The opportunity</div><h2>Your factory already produces the signals. The problem is what happens <span>between</span> the signal and the decision.</h2></div>
           <div className="intro-aside"><p>Reports in spreadsheets. Incidents in messages. Documents in folders. Decisions in people's heads.</p><p>We connect those fragments without asking the operation to start from zero.</p><Link href="/services" className="text-link">See how we work →</Link></div>
+        </div>
+      </section>
+
+      <section className="lifecycle-section">
+        <div className="container">
+          <div className="section-head lifecycle-head"><div><div className="eyebrow inverse">The system</div><h2>From operational friction<br/>to operational <span>action.</span></h2></div><p>One continuous layer — not five disconnected tools.</p></div>
+          <div className="lifecycle-track">
+            {lifecycle.map(([n,title,desc], i) => <div className="lifecycle-step" key={n}>
+              <div className="lifecycle-top"><span>{n}</span>{i < lifecycle.length - 1 && <b>→</b>}</div>
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </div>)}
+          </div>
         </div>
       </section>
 
