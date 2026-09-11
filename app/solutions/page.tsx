@@ -1,0 +1,10 @@
+import Link from 'next/link';
+import { PageFrame } from '../../components/site-shell';
+
+const solutions = [
+  {n:'01',title:'Automated Reporting',tag:'REPORTING',text:'Turn recurring production or operational inputs into a clean management report — without the manual consolidation loop.',items:['Excel / CSV ingestion','KPI calculation','Exception detection','Scheduled management reports']},
+  {n:'02',title:'Maintenance Intelligence',tag:'MAINTENANCE',text:'Transform technician narratives and maintenance events into structured information, priorities and follow-up.',items:['Incident extraction','Failure classification','Recurring-pattern detection','Alerts and intervention tracking']},
+  {n:'03',title:'Industrial Data Layer',tag:'DATA',text:'Create a structured operational layer from spreadsheets, documents, forms and existing systems so information can actually be analyzed.',items:['Data structuring','Validation rules','Operational models','API-ready architecture']},
+];
+
+export default function Solutions(){return <PageFrame><main className="section-light solutions-page"><section className="container page-hero"><div className="eyebrow">Standard solutions / 01</div><h1>Choose the system<br/><span>closest to your problem.</span></h1><p>These are repeatable solutions designed to become products inside our industrial platform. If your problem is not here, that's not a dead end — it is the reason we built the personal-solution path.</p></section><section className="container catalogue">{solutions.map(s=><article className="catalogue-row" key={s.n}><div className="catalogue-index">{s.n}<span>{s.tag}</span></div><div><h2>{s.title}</h2><p>{s.text}</p><div className="feature-line">{s.items.map(x=><span key={x}>{x}</span>)}</div></div><Link href="/contact" className="button button-dark">Discuss / Start ↗</Link></article>)}</section><section className="personal-banner"><div><div className="eyebrow">Not on the list?</div><h2>Your operation is specific.<br/>So can the solution be.</h2></div><Link href="/contact" className="button button-green">Request a personal solution ↗</Link></section></main></PageFrame>}
