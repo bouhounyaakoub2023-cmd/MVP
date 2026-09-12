@@ -8,11 +8,12 @@ const engravedImages = {
   lightning: 'https://images.unsplash.com/photo-1504274066651-8d31a536b11a?auto=format&fit=crop&w=1200&q=80',
 };
 
+// These are the three current standard commercial solutions.
+// QHSE and Document Intelligence remain demonstrated capabilities, not standalone products yet.
 const solutions = [
-  ['01', 'Production Intelligence', 'From production data to performance, variance and action-ready insight.'],
+  ['01', 'Automated Reporting', 'Turn recurring production or operational inputs into management-ready reports and exceptions.'],
   ['02', 'Maintenance Intelligence', 'Turn incident narratives into structured events, patterns and follow-up.'],
-  ['03', 'QHSE Intelligence', 'Transform operational events into safer, traceable responses.'],
-  ['04', 'Document Intelligence', 'Move from scattered documents to structured operational data.'],
+  ['03', 'Industrial Data Layer', 'Structure fragmented operational information so it can actually be analyzed and connected.'],
 ];
 const lifecycle = [
   ['01', 'CONNECT', 'Bring together the information your operation already produces.'],
@@ -40,15 +41,15 @@ export default function Home() {
             <div className="hero-actions"><Link href="/contact" className="button button-lunar">Request a Pilot <span>→</span></Link><Link href="/demo" className="button button-outline">Explore Demo Lab</Link></div>
           </div>
           <div className="hero-side-note"><span>HIGHER<br/>PRODUCTIVITY<br/>CLEANER OPERATIONS<br/>BRIGHTER TOMORROW</span><i /></div>
-          <div className="hero-metrics"><div><strong>+42%</strong><span>OPERATIONAL<br/>EFFICIENCY</span></div><div><strong>-30%</strong><span>DOWNTIME</span></div><div><strong>+25%</strong><span>PRODUCTIVITY</span></div></div>
-          <div className="hero-status"><span>REAL DATA</span><span>REAL INSIGHTS</span><span>REAL PROGRESS</span></div>
+          <div className="hero-metrics"><div><strong>DATA</strong><span>OPERATIONAL<br/>INPUTS</span></div><div><strong>AI</strong><span>STRUCTURED<br/>INTELLIGENCE</span></div><div><strong>ACTION</strong><span>WORKFLOWS<br/>AND FOLLOW-UP</span></div></div>
+          <div className="hero-status"><span>OPERATIONAL DATA</span><span>STRUCTURED INSIGHTS</span><span>ACTIONABLE WORKFLOWS</span></div>
         </div>
         <div className="container hero-solutions-grid">
-          {solutions.map(([n,title,desc]) => <Link href="/solutions" className="hero-solution-card" key={n}>
+          {solutions.map(([n,title,desc], i) => <Link href="/solutions" className="hero-solution-card" key={n}>
             <span className="card-no">{n}</span><h3>{title}</h3><p>{desc}</p><span className="card-arrow">↗</span>
           </Link>)}
         </div>
-        <div className="hero-trusted container"><span>TRUSTED BY<br/>INDUSTRIAL LEADERS</span><div>SONATRACH</div><div>ALSTOM</div><div>SIEMENS</div><div>TotalEnergies</div><div>Schneider Electric</div><div>ArcelorMittal</div></div>
+        <div className="hero-trusted container"><span>BUILT FOR<br/>INDUSTRIAL ENVIRONMENTS</span><div>MANUFACTURING</div><div>AUTOMOTIVE</div><div>ENERGY</div><div>PROCESS INDUSTRY</div><div>QHSE</div><div>OPERATIONS</div></div>
       </section>
 
       <section className="section-light intro-section">
@@ -69,7 +70,7 @@ export default function Home() {
 
       <section className="section solutions-preview orbitra-solutions">
         <div className="container">
-          <Reveal><div className="section-head"><div><div className="eyebrow inverse">Our solutions</div><h2>FROM INDUSTRIAL DATA<br/>TO OPERATIONAL <span>INTELLIGENCE</span></h2></div><Link href="/solutions" className="text-link light">View all solutions ↗</Link></div></Reveal>
+          <Reveal><div className="section-head"><div><div className="eyebrow inverse">Our standard solutions</div><h2>FROM INDUSTRIAL DATA<br/>TO OPERATIONAL <span>INTELLIGENCE</span></h2></div><Link href="/solutions" className="text-link light">View all solutions ↗</Link></div></Reveal>
           <div className="solution-grid">{solutions.map(([n,title,desc], i)=><Reveal key={n} delay={i * 0.08}><Link href="/solutions" className="solution-card"><div className="solution-card-media" style={{ backgroundImage: `url(${i === 1 ? engravedImages.rocket : i === 2 ? engravedImages.lightning : heroImage})` }} /><div className="solution-card-content"><span>{n}</span><h3>{title}</h3><p>{desc}</p><span className="row-arrow">↗</span></div></Link></Reveal>)}</div>
         </div>
       </section>
